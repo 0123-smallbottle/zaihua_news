@@ -1,6 +1,5 @@
 name: Build Flutter APK
 
-# Allow manual triggering with a button in the GitHub Actions UI
 on:
   workflow_dispatch:
 
@@ -18,7 +17,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '<flutter-version>' # e.g., '3.10.0'
+          flutter-version: latest # Use 'latest' or a specific version, e.g., '3.10.0'
 
       # Step 3: Cache dependencies
       - name: Cache Flutter dependencies
