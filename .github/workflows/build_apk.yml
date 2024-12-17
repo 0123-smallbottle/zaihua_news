@@ -24,7 +24,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.27.0 # Replace with the desired Flutter version
+          flutter-version: 3.22.0 # Replace with the desired Flutter version
 
       # Step 4: Cache dependencies
       - name: Cache Flutter dependencies
@@ -41,7 +41,7 @@ jobs:
 
       # Step 6: Build APK
       - name: Build release APKs (split per ABI)
-        run: flutter build apk --release --split-per-abi
+        run: flutter build apk --target-platform android-arm,android-arm64,android-x64 --split-per-abi
 
       # Step 7: Upload APK artifacts
       - name: Upload APK artifacts
