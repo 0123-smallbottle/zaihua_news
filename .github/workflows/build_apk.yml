@@ -1,0 +1,45 @@
+name: Build Flutter APK
+
+# Allow manual triggering with a button in the GitHub Actions UI
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Flutter APK
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Setup Flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '<flutter-version>' # e.g., '3.10.0'
+
+      # Step 3: Cache dependencies
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ runner.workspace }}/.pub-cache
+            build
+          key: flutter-${{ runner.os }}-${{ hashFiles('**/pubspec.yaml') }}
+
+      # Step 4: Get Flutter dependencies
+      - name: Install dependencies
+        run: flutter pub get
+
+      # Step 5: Build APK
+      - name: Build release APKs (split per ABI)
+        run: flutter build apk --release --split-per-abi
+
+      # Step 6: Upload APK artifacts
+      - name: Upload APK artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-apks
+          path: build/app/outputs/flutter-apk/*.apk
