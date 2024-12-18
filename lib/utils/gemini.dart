@@ -2,7 +2,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:zaihua_news/utils/storage.dart';
 
 class GeminiAI {
-  static Future<String> processContent(String title, String content) async {
+  static Future<String> processContent(String title, String content, String url) async {
     try {
       final apiKey = await Storage.getGeminiApiKey();
       final modelName = await Storage.getGeminiModel() ?? '';
@@ -21,7 +21,9 @@ class GeminiAI {
 
 Title: $title
 
-Content: $content''';
+Content: $content
+
+Source URL: $url''';
 
       final response = await model.generateContent([Content.text(prompt)]);
       return response.text ?? 'No response from AI';
@@ -31,7 +33,7 @@ Content: $content''';
     }
   }
 
-  static Stream<String> streamContent(String title, String content) async* {
+  static Stream<String> streamContent(String title, String content, String url) async* {
     try {
       final apiKey = await Storage.getGeminiApiKey();
       final modelName = await Storage.getGeminiModel() ?? '';
@@ -51,7 +53,9 @@ Content: $content''';
 
 Title: $title
 
-Content: $content''';
+Content: $content
+
+Source URL: $url''';
 
       final response = await model.generateContentStream([Content.text(prompt)]);
       

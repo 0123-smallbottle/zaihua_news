@@ -44,7 +44,7 @@ class HomePageController extends GetxController {
       final rawContent = response['content'] ?? '';
       
       // Use stream for real-time updates
-      await for (final chunk in GeminiAI.streamContent(title.value, rawContent)) {
+      await for (final chunk in GeminiAI.streamContent(title.value, rawContent, url.value)) {
         content.value += chunk;
       }
     } catch (e) {
