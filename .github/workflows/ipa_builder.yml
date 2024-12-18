@@ -9,21 +9,28 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: Setup Flutter
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.27.1'
-          
+          channel: stable
+
+      - name: Flutter clean
+        run: flutter clean
+
       - name: Get dependencies
         run: flutter pub get
-        
+
+      - name: Set up Xcode
+        run: sudo xcode-select --switch /Applications/Xcode.app
+
       - name: Build IPA
         run: flutter build ios --release --no-codesign
-        
+
       - name: Collect IPA artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: release-ipa
           path: build/ios/iphoneos/
