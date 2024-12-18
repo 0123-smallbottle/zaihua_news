@@ -64,9 +64,12 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Obx(() => MarkdownBody(
-                          data: controller.content.value,
-                          selectable: true,
-                        )),
+                              data: controller.content.value,
+                              selectable: true,
+                              styleSheet: MarkdownStyleSheet(
+                                p: const TextStyle(fontSize: 16),
+                              ),
+                            )),
                       ),
                       // 為底部按鈕預留空間
                       const SizedBox(height: 80),
@@ -77,21 +80,20 @@ class _HomePageState extends State<HomePage> {
                   right: 16,
                   bottom: 16,
                   child: Obx(() => Visibility(
-                    visible: controller.content.value.isNotEmpty,
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        Clipboard.setData(ClipboardData(
-                          text: controller.content.value
-                        ));
-                        Get.snackbar(
-                          '成功', 
-                          '內容已複製到剪貼簿',
-                          snackPosition: SnackPosition.BOTTOM,
-                        );
-                      },
-                      child: const Icon(Icons.copy),
-                    ),
-                  )),
+                        visible: controller.content.value.isNotEmpty,
+                        child: FloatingActionButton(
+                          onPressed: () {
+                            Clipboard.setData(
+                                ClipboardData(text: controller.content.value));
+                            Get.snackbar(
+                              '成功',
+                              '內容已複製到剪貼簿',
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                          },
+                          child: const Icon(Icons.copy),
+                        ),
+                      )),
                 ),
               ],
             ),
