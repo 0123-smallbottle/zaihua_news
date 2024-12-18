@@ -6,7 +6,8 @@ import 'package:zaihua_news/utils/gemini.dart';
 import 'package:zaihua_news/http/forbes.dart';
 import 'package:zaihua_news/http/android_authority.dart';
 import 'package:zaihua_news/http/reuters.dart';
-import 'package:zaihua_news/http/tomshardware.dart ';
+import 'package:zaihua_news/http/tomshardware.dart';
+import 'package:zaihua_news/http/the_verge.dart';
 
 class HomePageController extends GetxController {
   final url = ''.obs;
@@ -36,6 +37,8 @@ class HomePageController extends GetxController {
         response = await Reuters.getArticleContent(url.value);
       } else if (url.value.startsWith('https://www.tomshardware.com')) {
         response = await Tomshardware.getArticleContent(url.value);
+      } else if (url.value.startsWith('https://www.theverge.com')) {
+        response = await TheVerge.getArticleContent(url.value);
       } else {
         throw Exception('Unsupported website');
       }
