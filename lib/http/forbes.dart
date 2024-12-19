@@ -1,28 +1,20 @@
 import 'package:html/parser.dart';
-import 'package:http/http.dart' as http;
+import 'init.dart';
 
 class Forbes {
-  static Future<Map<String, String>> getArticleContent(String url) async {
+  static Future<WebContent> getArticleContent(String url) async {
     try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode != 200) {
-        throw Exception('Failed to load article');
-      }
-
-      final document = parse(response.body);
+      final response = await HttpClient.instance.get(url);
+      final document = parse(response.data);
       
       final title = document.querySelector('.fs-headline')?.text.trim() ?? '';
-      
       final contentElements = document.querySelectorAll('.article-body');
       final content = contentElements
           .map((element) => element.text)
           .join('\n')
           .trim();
 
-      return {
-        'title': title,
-        'content': content,
-      };
+      return WebContent(title: title, content: content);
     } catch (e) {
       throw Exception('Error parsing Forbes article: $e');
     }

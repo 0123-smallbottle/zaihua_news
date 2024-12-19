@@ -8,6 +8,7 @@ import 'package:zaihua_news/http/android_authority.dart';
 import 'package:zaihua_news/http/reuters.dart';
 import 'package:zaihua_news/http/tomshardware.dart';
 import 'package:zaihua_news/http/the_verge.dart';
+import 'package:zaihua_news/http/init.dart';
 
 class HomePageController extends GetxController {
   final url = ''.obs;
@@ -21,7 +22,7 @@ class HomePageController extends GetxController {
   void generate() async {
     try {
       content.value = ''; // Clear existing content
-      Map<String, String> response;
+      WebContent response;
       
       if (url.value.startsWith('https://9to5google.com')) {
         response = await NineToFiveGoogle.getArticleContent(url.value);
@@ -43,11 +44,10 @@ class HomePageController extends GetxController {
         throw Exception('Unsupported website');
       }
 
-      title.value = response['title'] ?? '';
-      final rawContent = response['content'] ?? '';
+      title.value = response.title;
       
       // Use stream for real-time updates
-      await for (final chunk in GeminiAI.streamContent(title.value, rawContent, url.value)) {
+      await for (final chunk in GeminiAI.streamContent(title.value, response.content, url.value)) {
         content.value += chunk;
       }
     } catch (e) {
