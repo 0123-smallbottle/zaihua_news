@@ -1,16 +1,15 @@
 # zaihua_news
+在花新聞發稿工具
 
-A new Flutter project.
+## Features
+- 自動爬取網站
+- 使用雲端prompt
+- 自動調用gemini總結
+- 支持自定義gemini模型
+- 快速複製
 
-## Getting Started
+## Channel
+https://t.me/zaihuanews
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## About me
+https://smallbottle2.top
