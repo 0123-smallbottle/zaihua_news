@@ -9,6 +9,9 @@ import 'package:zaihua_news/http/reuters.dart';
 import 'package:zaihua_news/http/tomshardware.dart';
 import 'package:zaihua_news/http/the_verge.dart';
 import 'package:zaihua_news/http/init.dart';
+import 'package:zaihua_news/http/pymnts.dart';
+import 'package:zaihua_news/http/android_police.dart';
+import 'package:zaihua_news/http/bleeping_computer.dart';
 
 class HomePageController extends GetxController {
   final url = ''.obs;
@@ -23,7 +26,7 @@ class HomePageController extends GetxController {
     try {
       content.value = ''; // Clear existing content
       WebContent response;
-      
+
       if (url.value.startsWith('https://9to5google.com')) {
         response = await NineToFiveGoogle.getArticleContent(url.value);
       } else if (url.value.startsWith('https://techcrunch.com')) {
@@ -40,14 +43,21 @@ class HomePageController extends GetxController {
         response = await Tomshardware.getArticleContent(url.value);
       } else if (url.value.startsWith('https://www.theverge.com')) {
         response = await TheVerge.getArticleContent(url.value);
+      } else if (url.value.startsWith('https://www.pymnts.com')) {
+        response = await Pymnts.getArticleContent(url.value);
+      } else if (url.value.startsWith('https://www.androidpolice.com')) {
+        response = await AndroidPolice.getArticleContent(url.value);
+      } else if (url.value.startsWith('https://www.bleepingcomputer.com')) {
+        response = await BleepingComputer.getArticleContent(url.value);
       } else {
         throw Exception('Unsupported website');
       }
 
       title.value = response.title;
-      
+
       // Use stream for real-time updates
-      await for (final chunk in GeminiAI.streamContent(title.value, response.content, url.value)) {
+      await for (final chunk
+          in GeminiAI.streamContent(title.value, response.content, url.value)) {
         content.value += chunk;
       }
     } catch (e) {
