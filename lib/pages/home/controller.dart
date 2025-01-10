@@ -13,6 +13,7 @@ import 'package:zaihua_news/http/pymnts.dart';
 import 'package:zaihua_news/http/android_police.dart';
 import 'package:zaihua_news/http/bleeping_computer.dart';
 import 'package:zaihua_news/http/nytimes.dart';
+import 'package:zaihua_news/http/pcmag.dart';
 
 class HomePageController extends GetxController {
   final url = ''.obs;
@@ -52,6 +53,8 @@ class HomePageController extends GetxController {
         response = await BleepingComputer.getArticleContent(url.value);
       } else if (url.value.startsWith('https://www.nytimes.com')) {
         response = await NYTimes.getArticleContent(url.value);
+      } else if (url.value.startsWith('https://www.pcmag.com')) {
+        response = await PCMag.getArticleContent(url.value);
       } else {
         throw Exception('Unsupported website');
       }
