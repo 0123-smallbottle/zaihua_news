@@ -14,6 +14,7 @@ import 'package:zaihua_news/http/android_police.dart';
 import 'package:zaihua_news/http/bleeping_computer.dart';
 import 'package:zaihua_news/http/nytimes.dart';
 import 'package:zaihua_news/http/pcmag.dart';
+import 'package:zaihua_news/http/techpowerup.dart';
 
 class HomePageController extends GetxController {
   final url = ''.obs;
@@ -55,6 +56,8 @@ class HomePageController extends GetxController {
         response = await NYTimes.getArticleContent(url.value);
       } else if (url.value.startsWith('https://www.pcmag.com')) {
         response = await PCMag.getArticleContent(url.value);
+      } else if (url.value.startsWith('https://www.techpowerup.com')) {
+        response = await TechPowerUp.getArticleContent(url.value);
       } else {
         throw Exception('Unsupported website');
       }
